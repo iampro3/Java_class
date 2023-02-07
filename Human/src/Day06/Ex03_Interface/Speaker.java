@@ -3,6 +3,7 @@ package Day06.Ex03_Interface;
 //implements, : 인터페이스로 구현하는 키워드
 public class Speaker implements RemoteControl {
 
+	// ..
 	private int volume;
 	@Override
 	public void turnOn() {
