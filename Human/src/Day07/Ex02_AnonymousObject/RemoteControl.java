@@ -1,4 +1,4 @@
-package Day06.Ex03_Interface;
+package Day07.Ex02_AnonymousObject;
 
 //인터페이스
 //자동으로 public static final 자동생성
