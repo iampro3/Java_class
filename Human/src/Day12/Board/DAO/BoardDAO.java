@@ -8,17 +8,20 @@ import Day12.JDBConnection;
 import Day12.Board.DTO.Board;
 
 public class BoardDAO extends JDBConnection{
+	
 	//데이터 목록 조회
 	public List<Board> selectList(){
+		
 		LinkedList<Board> boardList = new LinkedList<>();
 		
 		// SQL
 		String sql = " SELECT * "
-				   + " FROM board ";	// 자바 문자열에서 쿼리(sql 명령) 사용 시, 띄어쓰기 필수 
+				   + " FROM board ";		// 자바 문자열에서 쿼리(sql 명령) 사용 시, 따옴표 안에서 양쪽으로 띄어쓰기 필수 
 		try {
 			stmt = con.createStatement();	//쿼리문 실행 객체 생성
-			rs = stmt.executeQuery(sql);	//쿼리 실행 - 예외처리
+			rs = stmt.executeQuery(sql);	//쿼리 실행 - 예외처리 : resultset
 			
+			// 조회 결과를 리스트에 추가
 			while (rs.next()) {
 				Board board = new Board();
 				//결과 데이터 가져오기
@@ -41,14 +44,15 @@ public class BoardDAO extends JDBConnection{
 	
 	// 데이터 등록
 	public int insert(Board board) {
+	
 		int result = 0;
 		String sql = "INSERT INTO board(title, writer, content)"
 					+ "VALUE(?,?,?)";
 		try {
 			psmt = con.prepareStatement(sql);			//쿼리 실행 객체 생성
-			psmt.setString(1, board.getTitle());		//1번 ?에 제목을 맵핑
-			psmt.setString(2, board.getWriter());		//2번 ?에 작성자을 맵핑
-			psmt.setString(3, board.getContent());		//3번 ?에 내용을 맵핑
+			psmt.setString(1, board.getTitle() );		//1번 ?에 제목을 맵핑
+			psmt.setString(2, board.getWriter() );		//2번 ?에 작성자을 맵핑
+			psmt.setString(3, board.getContent() );		//3번 ?에 내용을 맵핑
 			result = psmt.executeUpdate();				//sql 실행요청, 적용된 데이터 개수 받아옴
 														//게시글 1개 쓰기 성공 시, result=1, 실패 시, result=0
 		}catch(Exception e) {
@@ -58,7 +62,9 @@ public class BoardDAO extends JDBConnection{
 		//글쓰기 성공
 		if(result > 0) {
 			System.out.println("\"" + board.getTitle() + "\" 게시글이 작성되었습니다.");			
-		}else {
+		}
+		//글쓰기 실패
+		else {
 			System.out.println("게시글 등록에 실패하였습니다.");
 		}
 		return result;
@@ -66,11 +72,13 @@ public class BoardDAO extends JDBConnection{
 		
 	//데이터 수정
 	public int update(Board board) {
+		
 		int result =0;
 		String sql = " UPDATE board "
-					+" SET title =  ? "
-					+"     , writer = ? "
-					+"     ,upd_date = now() "
+					+" 	  SET title =  ? "
+					+"       ,writer = ? "
+					+"       ,content = ? "
+					+"       ,upd_date = now() "
 					+" WHERE board_no = ? ";
 		//Mysql - now()합수 : 현재 날짜, 시간을 반환
 		
@@ -85,7 +93,7 @@ public class BoardDAO extends JDBConnection{
 			result = psmt.executeUpdate();
 			
 		}catch(Exception e) {
-			System.out.println("게시글 수정 시, 예외발생");
+			System.err.println("게시글 수정 시, 예외발생");
 			e.printStackTrace();
 		}
 		//글수정 성공
@@ -97,16 +105,18 @@ public class BoardDAO extends JDBConnection{
 		}		
 		return result;
 	}	//데이터 수정 끝
+	
 	//데이터 삭제
 	public int delete(int boardNo) {
 		
 		int result =0;
 		String sql = " DELETE FROM board "
-					+" WHERE board_No = ? ";
+					+" WHERE board_no = ? ";
+		
 		try {
-			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, boardNo);
-			result = psmt.executeUpdate();
+			psmt = con.prepareStatement(sql);		// 쿼리 실행 객체 생성
+			psmt.setInt(1, boardNo);				// ?(1) <- 글 번호
+			result = psmt.executeUpdate();			// sql 실행요청
 		}catch (Exception e) {
 			System.out.println("게시글 삭제 시, 예외 발생");
 			e.printStackTrace();
@@ -115,12 +125,13 @@ public class BoardDAO extends JDBConnection{
 		if(result>0) {
 			System.out.println("게시글이 삭제되었습니다.");
 		}
-		//글 수정 삭제
+		//글 삭제 실패
 		else {
 			System.out.println("게시글 삭제에 실패했습니다.");
 		}
 		return result;
 	}//데이터 삭제 끝
+	
 	//데이터 조회
 	public Board select(int boardNo) {
 		Board board = new Board();
@@ -128,24 +139,25 @@ public class BoardDAO extends JDBConnection{
 		String sql = " SELECT * "
 					+" FROM board "
 					+" WHERE board_no = ? ";
+		
 		try {
-			psmt = con.prepareStatement(sql);
-			psmt.setInt(1, boardNo);
-			rs = psmt.executeQuery();
+			psmt = con.prepareStatement(sql);			// 쿼리 실행 객체 생성
+			psmt.setInt(1, boardNo);					// ?(1) <- 글 번호
+			rs = psmt.executeQuery();					// sql 실행
 			
 			if(rs.next()) {
-				board.setBoardNo(rs.getInt("boardNo"));
+				board.setBoardNo(rs.getInt("board_no"));
 				board.setTitle(rs.getString("title"));
 				board.setWriter(rs.getString("writer"));
-				board.setContent(rs.getString("writer"));
+				board.setContent(rs.getString("content"));
 				board.setRegDate(rs.getTimestamp("reg_date"));
 				board.setUpdDate(rs.getTimestamp("upd_date"));
 			}
 			else {
-				System.out.println(boardNo +" 번 게시글이 존재하지 않습니다.");
+				System.out.println(boardNo + " 번 게시글이 존재하지 않습니다.");
 				board = null;
 			}
-		}catch(Exception e) {
+		} catch(Exception e) {
 			System.out.println("게시글 조회 시, 예외 발생");
 			e.printStackTrace();
 		}

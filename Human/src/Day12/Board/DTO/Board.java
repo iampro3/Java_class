@@ -2,7 +2,19 @@ package Day12.Board.DTO;
 
 import java.util.Date;
 
+/**
+ * 
+ * 게시판
+ * - 게시글 번호
+ * - 제목
+ * - 내용
+ * - 작성자
+ * - 등록일자
+ * - 수정일자
+ *
+ */
 public class Board {
+	
 	private int boardNo;
 	private String title;
 	private String content;
@@ -15,7 +27,7 @@ public class Board {
 	// Atl + Shift + S 
 	// 생성자
 	public Board() {
-		
+		this("제목없음", "내용없음", "글쓴이없음");	
 	}
 
 	public Board(String title, String content, String writer) {
@@ -77,7 +89,7 @@ public class Board {
 
 	// toString() 
 	// : 객체를 출력할 때, 지정할 문자열 양식을 반환하는 메소드
-	//   Object(최상위클래스)에 정의되어 있다.
+	//   Object(최상위클래스)에 정의되어 있으며, 이를 오버라이딩한다.
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", title=" + title + ", content=" + content + ", writer=" + writer
