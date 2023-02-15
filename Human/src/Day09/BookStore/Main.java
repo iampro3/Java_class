@@ -3,6 +3,7 @@ package Day09.BookStore;
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -33,7 +34,18 @@ public class Main {
 			//메뉴 출력
 			showMenu();
 			
-			int menuNo = sc.nextInt();
+			int menuNo = 0;
+			//잘못 입력 시 예외 처리
+			try {
+				menuNo = sc.nextInt();
+			}catch(InputMismatchException e) {
+				sc.nextLine();
+				System.err.println("(0~7) 사이의 숫자를 입력하세요.");
+				continue;	// 다시 입력하도록 반복문 처음으로 돌아감			
+			}catch(Exception e){
+				System.err.println("알 수 없는 오류로 프로그램을 종료합니다.");
+				break;
+			}
 			System.out.println(menuNo + "번 메뉴를 선택!");
 			
 			//유효한 메뉴 번호 검사
@@ -118,7 +130,7 @@ public class Main {
 	public static void cartList() {
 		System.out.println("****** 장바구니 목록 ******");
 		System.out.println("**********************");
-		System.out.println("번호\t| ISBN \t| 개수\t| 합계\t|");
+		System.out.println("번호\t| ISBN  \t| 개수\t| 합계\t|");
 		for (int i = 0; i < cartCount; i++) {
 			System.out.print((i+1) + "\t|");
 			System.out.print(cartList[i].getBookID() + "\t|");
@@ -135,9 +147,17 @@ public class Main {
 	public static void cartClear() {
 		System.out.println("****** 장바구니 비우기 ******");
 		
+		//장바구니에 항목이 없을 때,
+		if(cartCount == 0) {
+			System.out.println("장바구니에 추가된 항목이 없습니다.");
+			return;	// 메소드 종료 / return 타입이 void이다.
+		}
+		
+		//장바구니의 모든 항목을 null로 지정(삭제)
 		for (int i = 0; i < cartCount; i++) {
 			cartList[i] = null;
 		}
+		//장바구니 항목 개수 0
 		cartCount = 0;
 		System.out.println("장바구니 목록을 비웠습니다.");
 	}
@@ -237,6 +257,9 @@ public class Main {
 	 */
 	public static void cartRemove() {
 		System.out.println("****** 장바구니 항목삭제 ******");
+		
+		//장바구니에 항목이 없을 때,
+		if(cartCount == 0)
 		System.out.print("삭제할 장바구니 항목의 ISBN : ");
 		Scanner sc = new Scanner(System.in);
 		String bookId = sc.nextLine();
@@ -244,14 +267,23 @@ public class Main {
 		Cart[] newCartList = new Cart[BOOK_COUNT];
 		int	index = 0;
 
+		boolean removed = false;
 		for (int i = 0; i < cartCount; i++) {
 			if( !bookId.equals(cartList[i].getBookID())){
 				newCartList[index] = cartList[i];
 				index++;
 			}else {				
-				System.out.println(bookId + " 를 장바구니에서 삭제했습니다.");
+				removed = true;
 			}
 		}
+		if(removed) {
+			//해당항목을 장바구니에서 삭제했을 때,
+			System.out.println(bookId + " 를 장바구니에서 삭제하였습니다.");
+		} else {
+			//해당항목이 장바구니에 없을 때,
+			System.out.println(bookId + " 를 장바구니에 존재하지 않습니다.");
+		}
+		
 		cartCount = index;
 		cartList = newCartList;
 	}
