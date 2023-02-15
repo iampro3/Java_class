@@ -1,6 +1,6 @@
 package Day03;
 
-public class Ex01_Array01 {
+public class Ex01_Array {
 	public static void main(String[] args) {
 		int arr[]; // 배열선언
 		

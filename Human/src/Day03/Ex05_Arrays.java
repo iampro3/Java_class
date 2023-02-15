@@ -1,6 +1,6 @@
 package Day03;
 
-public class Ex05_Array {
+public class Ex05_Arrays {
 	public static void main(String[] args) {
 		int arr[][]= new int[2][3];
 		arr[0][0] = 1;
