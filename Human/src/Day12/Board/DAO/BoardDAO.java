@@ -25,7 +25,7 @@ public class BoardDAO extends JDBConnection{
 			while (rs.next()) {
 				Board board = new Board();
 				//결과 데이터 가져오기
-				//rs.getXXX("컬럼명") --> 해당컬럼의 데이터를 가져온다.
+				//rs.getXXX("컬럼명") --> 해당컬럼의 데이터를 가져온다. -- 게시글 번호 등 하기 컬럼을 모두 영문으로 입력해야 한다.
 				board.setBoardNo(rs.getInt("board_no"));
 				board.setTitle(rs.getString("title"));
 				board.setWriter(rs.getString("writer"));
@@ -46,8 +46,15 @@ public class BoardDAO extends JDBConnection{
 	public int insert(Board board) {
 	
 		int result = 0;
+		// 수정함
+		String sql = "INSERT INTO board( board_no,title, writer, content)"
+					+ "VALUES(SEQ_BOARD.nextval,?,?,?)";
+		
+		
+		/* sql
 		String sql = "INSERT INTO board(title, writer, content)"
 					+ "VALUE(?,?,?)";
+		*/
 		try {
 			psmt = con.prepareStatement(sql);			//쿼리 실행 객체 생성
 			psmt.setString(1, board.getTitle() );		//1번 ?에 제목을 맵핑
@@ -78,7 +85,8 @@ public class BoardDAO extends JDBConnection{
 					+" 	  SET title =  ? "
 					+"       ,writer = ? "
 					+"       ,content = ? "
-					+"       ,upd_date = now() "
+					// +"       ,upd_date = now() " // - mysql 문법이라 연결하면서 숨김 
+					+"		,upd_date = sysdate"    // - oracle
 					+" WHERE board_no = ? ";
 		//Mysql - now()합수 : 현재 날짜, 시간을 반환
 		

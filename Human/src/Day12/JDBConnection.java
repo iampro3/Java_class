@@ -48,12 +48,19 @@ public class JDBConnection {
 			//JDBC드라이버 로드
 			//MySQL
 			Class.forName("com.mysql.cj.jdbc.Driver");
+			// oracle --  여기 추가
+			Class.forName("oracle.jdbc.OracleDriver");
 			
 			//DB에 연결
 			//-연결에 필요한 정보 : URL, id, pw
 			// URL : [PORT] / [스키마]? 옵션 파라미터
 			// 		*내 PC IP 주소 : localhost : 127.0.0.1	
-			String url = "jdbc:mysql://localhost:3306/human?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false";
+			// Mysql
+			// String url = "jdbc:mysql://localhost:3306/human?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false";
+			
+			// String url = "jdbc:oracle:thin:@localhost:1521:xe"; xe 1g 버전
+			// ORACLE -- 아래 한 줄 추가
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 			String id = "human";
 			String pw = "123456";
 			
@@ -65,8 +72,8 @@ public class JDBConnection {
 			e.printStackTrace();
 		}
 	}
-	
-	//public static void main(String[] args) {
-	//	JDBConnection jc = new JDBConnection();
-	//}
+	// 하기 3줄을 주석을 풀고 실행하면 실행 성공이 뜬다. - 하기 3줄 원본 코드에서 주석 해제
+	public static void main(String[] args) {
+	JDBConnection jc = new JDBConnection();
+	}
 }
