@@ -64,7 +64,7 @@ public class JDBConnection {
 			// 1521 : 포트번호 (1521은 오라클DB 서버의 기본 포트 번호이다. )
 			// orcl or xe :  SID : 서비스 ID
 			// String url = "jdbc:oracle:thin:@localhost:1521:xe"; xe 10g 버전
-			// ORACLE -- 아래 한 줄 추가함 테스트 0312 home 다시 만듦
+			// ORACLE -- 아래 한 줄 추가함 테스트 0312 home 다시 만듦 - last
 			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 			String id = "human";
 			String pw = "123456";
