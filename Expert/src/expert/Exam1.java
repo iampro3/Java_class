@@ -4,7 +4,7 @@ public class Exam1 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//변수 2개, 3,4, 넣고 출력결과 1: " 3>4의 결과는ㄴfalse입니다.
+		//변수 2개, 3,4, 	넣고 출력결과 1: " 3>4의 결과는ㄴfalse입니다.
 		//		
 		int a= 3;
 		int b=4;
@@ -57,6 +57,37 @@ public class Exam1 {
 		}else {
 			System.out.println("사각형에 포함되지 않습니다");
 			}
-		}			 
-	}
+		}
+		//배열 타입선언
+		//int [] arr= null;
+		//배열의 크기 지정하는 키워드
+		//arr = new int[3];
+		//배열 타입
+		/*
+			향상된 for : 
+			int[] scores =[];
+			int = num =0
+			for(int score:scores) {
+		}
+		 */
+		
+		// 참조타입 (클래스, 인터페이스 배열)
+	/*  class의 구성멤버
+	 * 	필드 : 선언과 동시에 초기화 가능, 저장하는 변수, 클래스도 가능 | int a =10; / a=10; (블가능)
+		생성자 :	
+		메소드 : void MethodName([매개변수선언 (타입/변수명),...]){
+					작성한 코드를 실행하는 곳
+					
+					-> return에 맞는 데이터를 전달하기
+					}
+	*/
+	
+	/*
+	 * 필드 사용
+	 * 객체 내부 : 필드 이름
+	 * */
+	
+	// boolean result = obj1 == obj2 
+	
+}
 
