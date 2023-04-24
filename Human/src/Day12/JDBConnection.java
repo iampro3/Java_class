@@ -58,8 +58,13 @@ public class JDBConnection {
 			// Mysql
 			// String url = "jdbc:mysql://localhost:3306/human?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false";
 			
-			// String url = "jdbc:oracle:thin:@localhost:1521:xe"; xe 1g 버전
-			// ORACLE -- 아래 한 줄 추가
+			// oracle : 
+			// jdbc:oracle:thin : JDBC 드라이버 타입 (thin 타입)
+			// @localhost: : 호스트 주소(IP 주소), @localhost 또는 127.0.0.1 은 현재 PC 를 의미
+			// 1521 : 포트번호 (1521은 오라클DB 서버의 기본 포트 번호이다. )
+			// orcl or xe :  SID : 서비스 ID
+			// String url = "jdbc:oracle:thin:@localhost:1521:xe"; xe 10g 버전
+			// ORACLE -- 아래 한 줄 추가함 테스트 0312 home 다시 만듦 - last
 			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
 			String id = "human";
 			String pw = "123456";
